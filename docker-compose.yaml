@@ -17,6 +17,8 @@ services:
       - auth
     ports:
       - '22222:80'
+    volumes:
+      - /home/zasabri/Desktop/actfree/frontend:/usr/share/nginx/html/
 networks:
   net1:
     name: network1

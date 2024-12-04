@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/thumbnails/000/619/321/small/1304-39.jpg">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #e0e5ef);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .headDiv {
+            margin-bottom: 40px;
+        }
+
+        .signButoon, .logButton {
+            margin: 20px;
+        }
+
+        /* Button Styles */
+        button {
+            background-color: #4e758f;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3em;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="headDiv">
+        <h1>ACT FREE</h1>
+    </div>
+    <div class="signButoon">
+        <button onclick="signinPage()">Sign Up</button>
+    </div>
+    <div class="logButton">
+        <button onclick="loginPage()">Login</button>
+    </div>
+    <script>
+        function signinPage()
+        {
+            window.location.href = location.host + "sign";
+        }
+        function loginPage()
+        {
+            window.location.href = "login";
+        }
+    </script>
+</body>
+</html>
