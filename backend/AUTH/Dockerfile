@@ -4,8 +4,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 RUN pip install --upgrade pip
 RUN pip install django
 RUN pip install django_rest_framework
-RUN pip install djangorestframework_simplejwt
+RUN pip install djangorestframework_simplejwt[crypto]
 RUN pip install requests
+RUN pip install python-dotenv
 WORKDIR /work
 COPY ./auth .
 COPY ./start .
