@@ -11,7 +11,7 @@ services:
     ports:
       - '9000:80'
     volumes:
-      - /home/zasabri/Desktop/actfree/frontend:/usr/share/nginx/html/
+      - /home/zasabri/Desktop/actfree/frontend/:/usr/share/nginx/html/
 
   auth:
     image: authimg

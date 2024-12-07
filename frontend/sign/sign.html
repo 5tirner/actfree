@@ -110,7 +110,7 @@
         </div>
         <input onclick="sendInfos()" type="submit" value="Sign Up">
         <div class="form-footer">
-            Already have an account?<br><a href="/login/log.html">Login here</a>
+            Already have an account?<br><a href="/login/">Login here</a>
         </div>
     </div>
 
@@ -122,11 +122,11 @@
             const username = document.getElementById('username');
             const email = document.getElementById('mail');
             const password = document.getElementById('password');
-            console.log(firstname.value);
-            console.log(lastname.value);
-            console.log(username.value);
-            console.log(email.value);
-            console.log(password.value);
+            const inputs = [firstname, lastname, username, email, password];
+            for (const val of inputs){
+                if (val.value.length == 0){console.error('?'), val.style.borderColor = 'red'; return;}
+                console.log(val.value);
+            }
         }
     </script>
 </body>
