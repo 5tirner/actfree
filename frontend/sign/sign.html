@@ -88,27 +88,33 @@
 <body>
     <h1>Create Your Account Now!</h1>
     <div class="form-container">
+
         <div class="headDiv">
-            <!-- <label for="first">Firstname</label> -->
-            <input type="text" id="firstname" placeholder="Enter your first name">
+            <input type="text" id="firstname" placeholder="Enter your firstname">
         </div>
+
         <div class="headDiv">
-            <!-- <label for="last">Lastname</label> -->
-            <input type="text" id="lastname" placeholder="Enter your last name">
+            <input type="text" id="lastname" placeholder="Enter your lastname">
         </div>
+
         <div class="headDiv">
-            <!-- <label for="user">Username</label> -->
-            <input type="text" id="username" placeholder="Choose a username">
+            <input type="date" id="birth" placeholder="Enter your birth date">
         </div>
+
         <div class="headDiv">
-            <!-- <label for="mail">Email</label> -->
+            <input type="text" id="username" placeholder="Enter your username">
+        </div>
+
+        <div class="headDiv">
             <input type="email" id="mail" placeholder="Enter your email address">
         </div>
+
         <div class="headDiv">
-            <!-- <label for="pass">Password</label> -->
             <input type="password" id="password" placeholder="Choose a password">
         </div>
+
         <input onclick="sendInfos()" type="submit" value="Sign Up">
+
         <div class="form-footer">
             Already have an account?<br><a href="/login/">Login here</a>
         </div>
@@ -118,11 +124,12 @@
         function sendInfos()
         {
             const firstname = document.getElementById('firstname');
-            const lastname = document.getElementById('lastname');
-            const username = document.getElementById('username');
-            const email = document.getElementById('mail');
-            const password = document.getElementById('password');
-            const inputs = [firstname, lastname, username, email, password];
+            const lastname  = document.getElementById('lastname');
+            const username  = document.getElementById('username');
+            const email     = document.getElementById('mail');
+            const password  = document.getElementById('password');
+            const birthdate = document.getElementById('birth');
+            const inputs = [firstname, lastname, username, email, password, birthdate];
             for (const val of inputs){
                 if (val.value.length == 0){console.error('?'), val.style.borderColor = 'red'; return;}
                 console.log(val.value);

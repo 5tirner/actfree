@@ -7,6 +7,7 @@ RUN pip install django_rest_framework
 RUN pip install djangorestframework_simplejwt[crypto]
 RUN pip install requests
 RUN pip install python-dotenv
+RUN pip install Pillow
 WORKDIR /work
 COPY ./auth .
 COPY ./start .
