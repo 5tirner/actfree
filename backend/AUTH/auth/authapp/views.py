@@ -1,6 +1,8 @@
-from django.http import HttpResponse
+from rest_framework import response, status
+from .serializers import UserInfoSerial
 
 def login(req):
-    if req.method == "POST":
-        print("This Is A GET Method")
-    return HttpResponse("AUTHENTICATION PAGE")
+    pass
+
+def sign(req):
+    pass

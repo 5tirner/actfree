@@ -20,6 +20,8 @@ services:
     networks:
       - net1
     init: true
+    # volumes:
+    #   - /home/zasabri/Desktop/actfree/backend/AUTH:/work/
 networks:
   net1:
     name: network1
