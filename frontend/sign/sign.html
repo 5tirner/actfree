@@ -28,8 +28,10 @@
             margin-bottom: 30px;
         }
 
-        .headDiv {
-            margin-bottom: 20px;
+        #inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .form-container {
@@ -43,7 +45,7 @@
         }
 
         .form-container input {
-            width: 100%;
+            width: auto;
             padding: 12px;
             margin: 10px 0;
             border: 1px solid #ddd;
@@ -89,29 +91,7 @@
     <h1>Create Your Account Now!</h1>
     <div class="form-container">
 
-        <div class="headDiv">
-            <input type="text" id="firstname" placeholder="Enter your firstname">
-        </div>
-
-        <div class="headDiv">
-            <input type="text" id="lastname" placeholder="Enter your lastname">
-        </div>
-
-        <div class="headDiv">
-            <input type="date" id="birth" placeholder="Enter your birth date">
-        </div>
-
-        <div class="headDiv">
-            <input type="text" id="username" placeholder="Enter your username">
-        </div>
-
-        <div class="headDiv">
-            <input type="email" id="mail" placeholder="Enter your email address">
-        </div>
-
-        <div class="headDiv">
-            <input type="password" id="password" placeholder="Choose a password">
-        </div>
+        <div id="inputs"></div>
 
         <input onclick="sendInfos()" type="submit" value="Sign Up">
 
@@ -121,20 +101,40 @@
     </div>
 
     <script>
+        function createForm()
+        {
+            const inputs = [
+                { name : 'firstname', type : 'text', placeholder : 'Enter Your Firstname' },
+                { name : 'lastname' , type : 'text', placeholder : 'Enter Your Lastname' },
+                { name : 'username' , type : 'text', placeholder : 'Enter Your Username' },
+                { name : 'birthdate', type : 'date' },
+                { name : 'email'    , type : 'email', placeholder : 'Enter Your Email' },
+                { name : 'password' , type : 'password', placeholder : 'Enter Your Password' },
+            ]
+            inputs.map((e,i) => {
+                const input = document.createElement('input');
+                input.id = `input${i}`
+                input.placeholder = e.placeholder
+                input.name = e.name;
+                input.type = e.type;
+                document.getElementById('inputs').appendChild(input);
+                return;
+            })
+        }
+        
         function sendInfos()
         {
-            const firstname = document.getElementById('firstname');
-            const lastname  = document.getElementById('lastname');
-            const username  = document.getElementById('username');
-            const email     = document.getElementById('mail');
-            const password  = document.getElementById('password');
-            const birthdate = document.getElementById('birth');
-            const inputs = [firstname, lastname, username, email, password, birthdate];
-            for (const val of inputs){
-                if (val.value.length == 0){console.error('?'), val.style.borderColor = 'red'; return;}
-                console.log(val.value);
-            }
+            console.log(document.getElementById('inputs').children);
         }
+
+        function startListen(){
+        }
+
+        function turnToback(elm){
+            elm.style.borderColor = 'black';
+        }
+        createForm()
+        startListen();
     </script>
 </body>
 </html>
