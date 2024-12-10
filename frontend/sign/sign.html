@@ -83,7 +83,7 @@
         .form-container .form-footer {
             margin-top: 20px;
             font-size: 0.9em;
-            color: #888;
+            color: #6f6f6f;
         }
     </style>
 </head>
@@ -112,29 +112,35 @@
                 { name : 'password' , type : 'password', placeholder : 'Enter Your Password' },
             ]
             inputs.map((e,i) => {
-                const input = document.createElement('input');
-                input.id = `input${i}`
-                input.placeholder = e.placeholder
-                input.name = e.name;
-                input.type = e.type;
-                document.getElementById('inputs').appendChild(input);
+                const ELM = document.createElement('input');
+                ELM.id = `ELM${i}`;
+                ELM.placeholder = e.placeholder;
+                ELM.name = e.name;
+                ELM.type = e.type;
+                ELM.style.borderColor = 'gray';
+                document.getElementById('inputs').appendChild(ELM);
                 return;
             })
         }
         
         function sendInfos()
         {
-            console.log(document.getElementById('inputs').children);
-        }
-
-        function startListen(){
+            const inputs = document.getElementById('inputs').children;
+            for (input of inputs){
+                if (input.value.length == 0){
+                    input.style.borderColor = 'red';
+                    input.addEventListener('click', ()=>{
+                        input.style.borderColor = 'gray';
+                    })
+                    return;
+                }
+            }
         }
 
         function turnToback(elm){
             elm.style.borderColor = 'black';
         }
         createForm()
-        startListen();
     </script>
 </body>
 </html>

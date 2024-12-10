@@ -1,6 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+class userCreation(BaseUserManager):
+    def create_user(self, email, password, **extra_fields):
+        pass
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        raise "Create Super User Is Totally Forbbeiden"
 class UserInfo(AbstractBaseUser):
     # Important
     firstname = models.CharField(max_length=20, null=False)
@@ -15,3 +21,5 @@ class UserInfo(AbstractBaseUser):
     city      = models.CharField(max_length=100, null=True)
     # REQUIRED FIELDS
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ['firstname', 'lsatname', 'username', 'password']
+    objects = userCreation()

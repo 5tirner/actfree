@@ -1,13 +1,10 @@
 from django.urls import path
-from .views import login, sign
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from .views import sign
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
     #API's
-    path('login', login),
     path('sign', sign),
     #Tokens
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/tpken/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('tokens', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 ]

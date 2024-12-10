@@ -16,7 +16,6 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -48,19 +47,17 @@ AUTH_USER_MODEL = 'authapp.UserInfo'
 
 # Added for auth
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
 }
-
 # Token Expiration
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
-    "REFRESH_TOKEN_LIFETIM": timedelta(days=1),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-    "SLIDING_TOKEN_LIFETIME": timedelta(days=30),
-    "SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER": timedelta(days=1),
-    "SLIDING_TOKEN_LIFETIME_LATE_USER": timedelta(days=30),
+    "REFRESH_TOKEN_LIFETIM": timedelta(hours=12),
 }
 
 MIDDLEWARE = [
