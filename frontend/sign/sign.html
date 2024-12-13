@@ -85,9 +85,24 @@
             font-size: 0.9em;
             color: #6f6f6f;
         }
+
+        .errorNotif{
+            position: fixed;
+            top: 20px;
+            left: 25%;
+            transform: translateX(-50%);
+            background-color: #ff4f43; /* Red background for error */
+            color: rgb(210, 204, 204);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
+    <!-- <div class="errorNotif">
+        <p>Registration Failed!</p>
+    </div> -->
     <h1>Create Your Account Now!</h1>
     <div class="form-container">
 
@@ -107,7 +122,6 @@
                 { name : 'firstname', type : 'text', placeholder : 'Enter Your Firstname' },
                 { name : 'lastname' , type : 'text', placeholder : 'Enter Your Lastname' },
                 { name : 'username' , type : 'text', placeholder : 'Enter Your Username' },
-                { name : 'birthdate', type : 'date' },
                 { name : 'email'    , type : 'email', placeholder : 'Enter Your Email' },
                 { name : 'password' , type : 'password', placeholder : 'Enter Your Password' },
             ]
@@ -123,9 +137,19 @@
             })
         }
         
-        function sendInfos()
+        async function showError(){
+            const notif = document.createElement('div');
+            notif.textContent = "Registration Fail!";
+            notif.classList.add('errorNotif');
+            document.body.appendChild(notif);
+            await setTimeout(() => {}, 2000);
+            // document.body.removeChild(notif);
+        }
+
+        async function sendInfos()
         {
             const inputs = document.getElementById('inputs').children;
+            const data = {};
             for (input of inputs){
                 if (input.value.length == 0){
                     input.style.borderColor = 'red';
@@ -134,13 +158,21 @@
                     })
                     return;
                 }
+                data[input.name] = input.value;
                 console.log(input.value)
+            }
+            console.log(data);
+            const response = await fetch('http://127.0.0.1:9000/authentication/SignUp',
+                                        {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify(data)
+                                        });
+            if (response.status != 201){
+                await showError();
             }
         }
 
-        function turnToback(elm){
-            elm.style.borderColor = 'black';
-        }
         createForm()
     </script>
 </body>

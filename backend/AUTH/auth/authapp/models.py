@@ -13,7 +13,6 @@ class UserInfo(AbstractBaseUser):
     lastname  = models.CharField(max_length=20, null=False)
     username  = models.CharField(max_length=20, null=False)
     email     = models.EmailField(unique=True, null=False)
-    birthdate = models.DateField(null=False)
     password  = models.CharField(max_length=1000, null=False)
     # Not
     picture   = models.ImageField(null=True)
