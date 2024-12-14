@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGN UP</title>
+    <title>Log In</title>
     <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/thumbnails/000/619/321/small/1304-39.jpg">
     <style>
         * {
@@ -134,20 +134,13 @@
         <div id="top-line"></div>
         <div id="inputs"></div>
         <div id="submit-button" onclick="sendInfos()"></div>
-        <div class="form-footer">
-            Already have an account? <a href="/login/"><br>Login</a>
-        </div>
     </div>
 
     <script>
         function inputsGenerator()
         {
             const inputs = [
-                { name: 'firstname', type: 'text', placeholder: 'Enter Your Firstname' },
-                { name: 'lastname', type: 'text', placeholder: 'Enter Your Lastname' },
-                { name: 'username', type: 'text', placeholder: 'Enter Your Username' },
-                { name: 'email', type: 'email', placeholder: 'Enter Your Email' },
-                { name: 'password',type:'password',placeholder:'Enter Your Password >= 8 Charachters' }
+                { name: 'activationCode', type: 'text', placeholder: 'Enter virefication code' }
             ];
             return inputs;
         }
@@ -206,33 +199,13 @@
                 }
                 data[input.name] = input.value;
             }
-
             console.log(data);
-            const response = await fetch('http://127.0.0.1:9000/authentication/SignUp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            if (response.status === 203) {
-                showError('Invalid Email, Registration failed!', 5000);
-            }
-            else if (response.status === 204){
-                showError('Weak password, use mix of upper&lower letters, digits, symbols!', 5000);
-            }
-            else if (response.status === 201){
-                console.log("Activation Needed");
-                location.href = '/activation/';
-            }
-            else {
-                showError("Unexpected Error, Try Again Later!", 2000);
-            }
         }
 
         // Draw
-        createHeader("Create Your Account Now!");
+        createHeader("Activate Your Account Now!");
         createForm(inputsGenerator());
-        toSubmit("Sign now!");
+        toSubmit("Activate!");
     </script>
 </body>
 </html>

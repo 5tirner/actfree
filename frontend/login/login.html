@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
+    <title>Log In</title>
     <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/thumbnails/000/619/321/small/1304-39.jpg">
     <style>
         * {
@@ -131,21 +131,32 @@
 <body>
 
     <div class="form-container">
-        <h1>Access Your Account Here!</h1>
+        <div id="top-line"></div>
         <div id="inputs"></div>
-        <input onclick="sendInfos()" type="submit" value="Login">
+        <div id="submit-button" onclick="sendInfos()"></div>
         <div class="form-footer">
-            Don't Have Account? <a href="/sign/"> <br>Sign</a>
+            You don't have account? <a href="/sign/"><br>Sign</a>
         </div>
     </div>
 
     <script>
-        function createForm() {
+        function inputsGenerator()
+        {
             const inputs = [
                 { name: 'email', type: 'email', placeholder: 'Enter Your Email' },
-                { name: 'password', type: 'password', placeholder: 'Enter Your Password' },
+                { name: 'password',type:'password',placeholder:'Enter Your Password' }
             ];
+            return inputs;
+        }
+        // ELEMENTS
+        function createHeader(text)
+        {
+            const topLine = document.createElement('h1');
+            topLine.textContent = text;
+            document.getElementById('top-line').appendChild(topLine);
+        }
 
+        function createForm(inputs) {
             inputs.forEach((input, i) => {
                 const ELM = document.createElement('input');
                 ELM.id = `ELM${i}`;
@@ -156,7 +167,17 @@
             });
         }
 
-        async function showError(errorMessage, expireTime) {
+        function toSubmit(text)
+        {
+            const submitButton = document.createElement('input');
+            submitButton.type = "submit";
+            submitButton.value = text;
+            document.getElementById('submit-button').appendChild(submitButton);
+        }
+
+        // My Logic
+        async function showError(errorMessage, expireTime)
+        {
             const notif = document.createElement('div');
             notif.textContent = errorMessage;
             notif.classList.add('errorNotif');
@@ -166,14 +187,15 @@
             }, expireTime);
         }
 
-        async function sendInfos() {
+        async function sendInfos()
+        {
             const inputs = document.getElementById('inputs').children;
             const data = {};
 
             for (let input of inputs) {
                 if (input.value.trim() === '') {
                     input.style.borderColor = 'red';
-                    showError(input.name.charAt(0).toUpperCase() + input.name.slice(1) + " can't be empty!", 2000);
+                    showError(input.name.charAt(0).toUpperCase()+input.name.slice(1)+" can't be empty!", 1000);
                     input.addEventListener('click', () => {
                         input.style.borderColor = '#ddd';
                     });
@@ -181,22 +203,29 @@
                 }
                 data[input.name] = input.value;
             }
-            console.log(data);
-            const response = await fetch('http://127.0.0.1:9000/authentication/login',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                if (response.status === 200) {
-                    console.log('VALID LOGIN');
-                }
-                else {
-                    showError('Invalid Informations!', 3000);
-                }
-        }
-        createForm();
-    </script>
 
+            console.log(data);
+            const response = await fetch('http://127.0.0.1:9000/authentication/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.status === 203) {
+                showError('Invalid Informations!', 5000);
+            }
+            else if (response.status === 200){
+                console.log("Valid Infos");
+            }
+            else {
+                showError("Unexpected Error, Try Again Later!", 2000);
+            }
+        }
+
+        // Draw
+        createHeader("Access Your Account!");
+        createForm(inputsGenerator());
+        toSubmit("Login!");
+    </script>
 </body>
 </html>
