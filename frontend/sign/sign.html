@@ -6,174 +6,240 @@
     <title>SIGN UP</title>
     <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/thumbnails/000/619/321/small/1304-39.jpg">
     <style>
-        body {
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f0f4f8, #e0e5ef);
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #e0e5ef);
             display: flex;
             justify-content: center;
             align-items: center;
-            height:fit-content;
-            text-align: center;
+            height: 100vh;
+            overflow: hidden;
             color: #333;
         }
 
         h1 {
-            font-size: 3em;
-            font-weight: bold;
+            font-size: 1.8em;
+            font-weight: 600;
             color: #2c3e50;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
-        #inputs {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .form-container {
             background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 60%;
-            max-width: 800px;
-            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px; /* Reduced max-width */
+            text-align: center;
         }
 
         .form-container input {
-            width: auto;
-            padding: 12px;
-            margin: 10px 0;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            font-size: 0.9em; /* Smaller font size */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #f9f9f9;
         }
 
         .form-container input:focus {
-            border-color: #0d344e;
-            box-shadow: 0 0 8px rgba(5, 34, 53, 0.6);
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
         }
 
         .form-container input[type="submit"] {
-            background-color: #111b22;
-            color: rgb(233, 225, 225);
+            background-color: #2980b9;
+            color: #ffffff;
             border: none;
             cursor: pointer;
-            font-size: 1.2em;
-            transition: all 0.3s ease;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: #2980b9;
+            background-color: #3498db;
         }
 
         .form-container label {
             font-size: 1em;
-            font-weight: bold;
-            display: block;
+            font-weight: 600;
+            color: #555;
             margin-bottom: 8px;
             text-align: left;
+            display: block;
         }
 
-        .form-container .form-footer {
-            margin-top: 20px;
+        .form-footer {
+            margin-top: 15px;
             font-size: 0.9em;
             color: #6f6f6f;
         }
 
-        .errorNotif{
+        .form-footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: #2980b9;
+        }
+
+        .errorNotif {
             position: fixed;
             top: 20px;
-            left: 25%;
+            left: 50%;
             transform: translateX(-50%);
-            background-color: #ff4f43; /* Red background for error */
-            color: rgb(210, 204, 204);
+            background-color: #e74c3c;
+            color: #fff;
             padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            animation: showError 0.5s forwards;
+        }
+
+        @keyframes showError {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em; /* Smaller h1 on mobile */
+            }
+
+            .form-container {
+                padding: 15px;
+                width: 90%;
+                max-width: 350px; /* Further reduced max-width */
+            }
         }
     </style>
 </head>
 <body>
-    <!-- <div class="errorNotif">
-        <p>Registration Failed!</p>
-    </div> -->
-    <h1>Create Your Account Now!</h1>
+
     <div class="form-container">
-
+        <div id="top-line"></div>
         <div id="inputs"></div>
-
-        <input onclick="sendInfos()" type="submit" value="Sign Up">
-
+        <div id="submit-button" onclick="sendInfos()"></div>
         <div class="form-footer">
-            Already have an account?<br><a href="/login/">Login here</a>
+            Already have an account? <a href="/login/"><br>Login</a>
         </div>
     </div>
 
     <script>
-        function createForm()
+        function inputsGenerator()
         {
             const inputs = [
-                { name : 'firstname', type : 'text', placeholder : 'Enter Your Firstname' },
-                { name : 'lastname' , type : 'text', placeholder : 'Enter Your Lastname' },
-                { name : 'username' , type : 'text', placeholder : 'Enter Your Username' },
-                { name : 'email'    , type : 'email', placeholder : 'Enter Your Email' },
-                { name : 'password' , type : 'password', placeholder : 'Enter Your Password' },
-            ]
-            inputs.map((e,i) => {
+                { name: 'firstname', type: 'text', placeholder: 'Enter Your Firstname' },
+                { name: 'lastname', type: 'text', placeholder: 'Enter Your Lastname' },
+                { name: 'username', type: 'text', placeholder: 'Enter Your Username' },
+                { name: 'email', type: 'email', placeholder: 'Enter Your Email' },
+                { name: 'password',type:'password',placeholder:'Enter Your Password >= 8 Charachters' }
+            ];
+            return inputs;
+        }
+        // ELEMENTS
+        function createHeader(text)
+        {
+            const topLine = document.createElement('h1');
+            topLine.textContent = text;
+            document.getElementById('top-line').appendChild(topLine);
+        }
+
+        function createForm(inputs) {
+            inputs.forEach((input, i) => {
                 const ELM = document.createElement('input');
                 ELM.id = `ELM${i}`;
-                ELM.placeholder = e.placeholder;
-                ELM.name = e.name;
-                ELM.type = e.type;
-                ELM.style.borderColor = 'gray';
+                ELM.placeholder = input.placeholder;
+                ELM.name = input.name;
+                ELM.type = input.type;
                 document.getElementById('inputs').appendChild(ELM);
-                return;
-            })
+            });
         }
-        
-        async function showError(){
+
+        function toSubmit(text)
+        {
+            const submitButton = document.createElement('input');
+            submitButton.type = "submit";
+            submitButton.value = text;
+            document.getElementById('submit-button').appendChild(submitButton);
+        }
+
+        // My Logic
+        async function showError(errorMessage, expireTime)
+        {
             const notif = document.createElement('div');
-            notif.textContent = "Registration Fail!";
+            notif.textContent = errorMessage;
             notif.classList.add('errorNotif');
             document.body.appendChild(notif);
-            await setTimeout(() => {}, 2000);
-            // document.body.removeChild(notif);
+            setTimeout(() => {
+                notif.remove();
+            }, expireTime);
         }
 
         async function sendInfos()
         {
             const inputs = document.getElementById('inputs').children;
             const data = {};
-            for (input of inputs){
-                if (input.value.length == 0){
+
+            for (let input of inputs) {
+                if (input.value.trim() === '') {
                     input.style.borderColor = 'red';
-                    input.addEventListener('click', ()=>{
-                        input.style.borderColor = 'gray';
-                    })
+                    showError(input.name.charAt(0).toUpperCase()+input.name.slice(1)+" can't be empty!", 1000);
+                    input.addEventListener('click', () => {
+                        input.style.borderColor = '#ddd';
+                    });
                     return;
                 }
                 data[input.name] = input.value;
-                console.log(input.value)
             }
+
             console.log(data);
-            const response = await fetch('http://127.0.0.1:9000/authentication/SignUp',
-                                        {
-                                            method: 'POST',
-                                            headers: { 'Content-Type': 'application/json' },
-                                            body: JSON.stringify(data)
-                                        });
-            if (response.status != 201){
-                await showError();
+            const response = await fetch('http://127.0.0.1:9000/authentication/SignUp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.status === 203) {
+                showError('Invalid Email, Registration failed!', 5000);
+            }
+            else if (response.status === 204){
+                showError('Weak password, use mix of upper&lower letters, digits, symbols!', 5000);
+            }
+            else if (response.status === 201){
+                console.log("Activation Needed");
+                document.getElementById('top-line').replaceChildren();
+                createHeader("Enter The Activation Code");
+                document.getElementById('inputs').replaceChildren();
+                const inputs = [
+                        { name: 'activationCode', type: 'text', placeholder: '6 digits code' },];
+                createForm(inputs);
+                document.getElementById('submit-button').replaceChildren();
+                toSubmit("Activation");
+            }
+            else {
+                showError("Unexpected Error, Try Again Later!", 2000);
             }
         }
 
-        createForm()
+        // Draw
+        createHeader("Create Your Account Now!");
+        createForm(inputsGenerator());
+        toSubmit("Sign now!");
     </script>
 </body>
 </html>

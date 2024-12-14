@@ -6,102 +6,197 @@
     <title>LOGIN</title>
     <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/thumbnails/000/619/321/small/1304-39.jpg">
     <style>
-        body {
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f0f4f8, #e0e5ef);
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #e0e5ef);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
+            overflow: hidden;
             color: #333;
         }
 
         h1 {
-            font-size: 3em;
-            font-weight: bold;
+            font-size: 1.8em;
+            font-weight: 600;
             color: #2c3e50;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
-        .headDiv {
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .form-container {
             background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             width: 100%;
-            max-width: 700px;
-            margin: 20px;
+            max-width: 400px; /* Reduced max-width */
+            text-align: center;
         }
 
         .form-container input {
-            width: 100vh;
-            padding: 12px;
-            margin: 10px 0;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            font-size: 0.9em; /* Smaller font size */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #f9f9f9;
         }
 
         .form-container input:focus {
-            border-color: #0a1e2b;
-            box-shadow: 0 0 8px rgba(7, 25, 37, 0.6);
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
         }
 
         .form-container input[type="submit"] {
-            background-color: #0a1014;
-            color: rgb(245, 239, 239);
+            background-color: #2980b9;
+            color: #ffffff;
             border: none;
             cursor: pointer;
-            font-size: 1.2em;
-            transition: all 0.3s ease;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: #2980b9;
+            background-color: #3498db;
         }
 
         .form-container label {
             font-size: 1em;
-            font-weight: bold;
-            display: block;
+            font-weight: 600;
+            color: #555;
             margin-bottom: 8px;
             text-align: left;
+            display: block;
         }
 
-        .form-container .form-footer {
-            margin-top: 20px;
+        .form-footer {
+            margin-top: 15px;
             font-size: 0.9em;
-            color: #888;
+            color: #6f6f6f;
+        }
+
+        .form-footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: #2980b9;
+        }
+
+        .errorNotif {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            animation: showError 0.5s forwards;
+        }
+
+        @keyframes showError {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em; /* Smaller h1 on mobile */
+            }
+
+            .form-container {
+                padding: 15px;
+                width: 90%;
+                max-width: 350px; /* Further reduced max-width */
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Login To Access Your Account</h1>
+
     <div class="form-container">
-        <div class="headDiv">
-            <!-- <label for="first">Username / Email</label> -->
-            <input type="email" id="identity" placeholder="Enter your Email">
-        </div>
-        <div class="headDiv">
-            <!-- <label for="last">Password</label> -->
-            <input type="password" id="password" placeholder="Enter your Password">
-        </div>
-        <input type="submit" value="Connect">
+        <h1>Access Your Account Here!</h1>
+        <div id="inputs"></div>
+        <input onclick="sendInfos()" type="submit" value="Login">
         <div class="form-footer">
-            Don't Have Account? <br><a href="/sign/">Go Now!</a>
+            Don't Have Account? <a href="/sign/"> <br>Sign</a>
         </div>
     </div>
+
     <script>
+        function createForm() {
+            const inputs = [
+                { name: 'email', type: 'email', placeholder: 'Enter Your Email' },
+                { name: 'password', type: 'password', placeholder: 'Enter Your Password' },
+            ];
+
+            inputs.forEach((input, i) => {
+                const ELM = document.createElement('input');
+                ELM.id = `ELM${i}`;
+                ELM.placeholder = input.placeholder;
+                ELM.name = input.name;
+                ELM.type = input.type;
+                document.getElementById('inputs').appendChild(ELM);
+            });
+        }
+
+        async function showError(errorMessage, expireTime) {
+            const notif = document.createElement('div');
+            notif.textContent = errorMessage;
+            notif.classList.add('errorNotif');
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.remove();
+            }, expireTime);
+        }
+
+        async function sendInfos() {
+            const inputs = document.getElementById('inputs').children;
+            const data = {};
+
+            for (let input of inputs) {
+                if (input.value.trim() === '') {
+                    input.style.borderColor = 'red';
+                    showError(input.name.charAt(0).toUpperCase() + input.name.slice(1) + " can't be empty!", 2000);
+                    input.addEventListener('click', () => {
+                        input.style.borderColor = '#ddd';
+                    });
+                    return;
+                }
+                data[input.name] = input.value;
+            }
+            console.log(data);
+            const response = await fetch('http://127.0.0.1:9000/authentication/login',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (response.status === 200) {
+                    console.log('VALID LOGIN');
+                }
+                else {
+                    showError('Invalid Informations!', 3000);
+                }
+        }
+        createForm();
     </script>
+
 </body>
 </html>
