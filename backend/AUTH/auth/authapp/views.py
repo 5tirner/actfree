@@ -2,6 +2,7 @@ from rest_framework import response, status, permissions, views
 from .serializers import UserInfoSerial
 from .passCheck import checkPassword
 from .models import UserInfo
+import requests
 
 class SignUp(views.APIView):
     permission_classes = [permissions.AllowAny]
@@ -33,6 +34,11 @@ class login(views.APIView):
     def post(self, req):
         logInfo = req.data
         try:
-            pass
+            fetching = requests.post('http://127.0.0.1:10000/authentication/tokens',
+                                     json={ 'email': logInfo.get('email'),
+                                            'password': logInfo.get('password')
+                                           })
+            print(f"RSEPONSE\n {fetching.content}")
+            return response.Response(status=status.HTTP_200_OK)
         except:
             return response.Response(status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
