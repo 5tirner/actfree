@@ -2,6 +2,7 @@ from rest_framework import response, status, permissions, views
 from .serializers import UserInfoSerial
 from .passCheck import checkPassword
 from .models import UserInfo
+import requests
 
 class SignUp(views.APIView):
     permission_classes = [permissions.AllowAny]

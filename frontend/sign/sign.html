@@ -147,7 +147,7 @@
                 { name: 'lastname', type: 'text', placeholder: 'Enter Your Lastname' },
                 { name: 'username', type: 'text', placeholder: 'Enter Your Username' },
                 { name: 'email', type: 'email', placeholder: 'Enter Your Email' },
-                { name: 'password',type:'password',placeholder:'Enter Your Password >= 8 Charachters' }
+                { name: 'password',type:'password',placeholder:'Enter Your Password' }
             ];
             return inputs;
         }
@@ -218,7 +218,7 @@
                 showError('Invalid Email, Registration failed!', 5000);
             }
             else if (response.status === 204){
-                showError('Weak password, use mix of upper&lower letters, digits, symbols!', 5000);
+                showError ('Weak password: Use mix of upper&lower letters, digits, symbols, With eight charchters or more', 6000);
             }
             else if (response.status === 201){
                 console.log("Activation Needed");
@@ -232,7 +232,7 @@
         // Draw
         createHeader("Create Your Account Now!");
         createForm(inputsGenerator());
-        toSubmit("Sign now!");
+        toSubmit("Sign");
     </script>
 </body>
 </html>

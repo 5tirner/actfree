@@ -9,16 +9,20 @@ class userCreation(BaseUserManager):
         raise "Create Super User Is Totally Forbbeiden"
 class UserInfo(AbstractBaseUser):
     # Important
-    firstname = models.CharField(max_length=20, null=False)
-    lastname  = models.CharField(max_length=20, null=False)
-    username  = models.CharField(max_length=20, null=False)
+    firstname = models.CharField(max_length=50, null=False)
+    lastname  = models.CharField(max_length=50, null=False)
+    username  = models.CharField(max_length=50, null=False)
     email     = models.EmailField(unique=True, null=False)
     password  = models.CharField(max_length=1000, null=False)
     # Not
-    picture   = models.ImageField(null=True)
-    country   = models.CharField(max_length=100, null=True)
-    city      = models.CharField(max_length=100, null=True)
+    # picture   = models.ImageField(null=True)
+    # country   = models.CharField(max_length=100, null=True)
+    # city      = models.CharField(max_length=100, null=True)
     # REQUIRED FIELDS
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['password']
     objects = userCreation()
+
+class activation(models.Model):
+    isAuth = models.BooleanField(default=False)
+    verfCode = models.CharField(max_length=6)
