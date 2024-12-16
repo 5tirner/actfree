@@ -214,8 +214,12 @@
             if (response.status === 203) {
                 showError('Invalid Informations!', 5000);
             }
+            else if (response.status == 204){
+                location.href = '/activation/';
+            }
             else if (response.status === 200){
                 console.log("Valid Infos");
+                location.href = '/profile/';
             }
             else {
                 showError("Unexpected Error, Try Again Later!", 2000);

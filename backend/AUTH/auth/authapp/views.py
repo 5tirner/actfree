@@ -1,8 +1,9 @@
 from rest_framework import response, status, permissions, views
 from .serializers import UserInfoSerial
 from .passCheck import checkPassword
-from .models import UserInfo
+from .models import UserInfo, UserActivation
 import requests
+import json
 
 class SignUp(views.APIView):
     permission_classes = [permissions.AllowAny]
@@ -33,12 +34,22 @@ class login(views.APIView):
     authentication_classes = []
     def post(self, req):
         logInfo = req.data
-        try:
-            fetching = requests.post('http://127.0.0.1:10000/authentication/tokens',
-                                     json={ 'email': logInfo.get('email'),
-                                            'password': logInfo.get('password')
-                                           })
-            print(f"RSEPONSE\n {fetching.content}")
-            return response.Response(status=status.HTTP_200_OK)
-        except:
+        fetching = requests.post('http://127.0.0.1:10000/authentication/tokens',
+                                 json={ 'email': logInfo.get('email'),
+                                        'password': logInfo.get('password')
+                                       })
+        print(f"Status Code == {fetching.status_code}\nContent == {fetching.content}")
+        if fetching.status_code != 200:
             return response.Response(status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        userOnDB = UserInfo.objects.get(email=logInfo.get('email'))
+        if userOnDB.isAuth == False:
+            return response.Response(status=status.HTTP_204_NO_CONTENT)
+        return response.Response(status=status.HTTP_200_OK)
+
+class activation(views.APIView):
+    def post(self, req):
+        try:
+            UserActivation.objects.get(verfCode=req.get('activationCode'))
+            print(f"{req.get('activationCode')}: is founded")
+        except:
+            print(f"{req.get('activationCode')} Not found")

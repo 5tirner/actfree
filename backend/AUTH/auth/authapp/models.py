@@ -9,7 +9,7 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     username  = models.CharField(max_length=50, null=False)
     email     = models.EmailField(unique=True, null=False)
     password  = models.CharField(max_length=1000, null=False)
-
+    isAuth    = models.BooleanField(default=False)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['password']
     objects = userCreation()
@@ -17,6 +17,6 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-class activation(models.Model):
-    isAuth = models.BooleanField(default=False)
-    verfCode = models.CharField(max_length=6)
+class UserActivation(models.Model):
+    username = models.CharField(max_length=50)
+    verfCode = models.CharField(max_length=8)
