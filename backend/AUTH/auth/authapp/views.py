@@ -2,20 +2,25 @@ from rest_framework import response, status, permissions, views
 from .serializers import UserInfoSerial
 from .passCheck import checkPassword
 from .models import UserInfo
-import requests
 
 class SignUp(views.APIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
     def post(self, req):
-        userinfo = req.data
-        print(f'- Data To Post {userinfo}.')
+        theData = req.data
+        print(f'- Data To Post {theData}.')
         print('Etat: ', end='')
-        serial = UserInfoSerial(data=userinfo)
+        serial = UserInfoSerial(data=theData)
         if serial.is_valid():
-            if checkPassword(userinfo.get('password')) == False:
+            if checkPassword(theData.get('password')) == False:
                 return response.Response(status=status.HTTP_204_NO_CONTENT)
-            serial.save()
+            UserInfo.objects.create_user(
+                firstname = theData.get('firstname'),
+                lastname = theData.get('lastname'),
+                username = theData.get('username'),
+                email = theData.get('email'),
+                password = theData.get('password')
+            )
             print('Success')
             #TODO: Send Verification Code
             return response.Response(status=status.HTTP_201_CREATED)
@@ -28,11 +33,6 @@ class login(views.APIView):
     def post(self, req):
         logInfo = req.data
         try:
-            userInDb = UserInfo.objects.get(email=logInfo.get('email'))
-            print(f'The Email: {logInfo.get('email')} Stored In DB')
-            if userInDb.password != logInfo.get('password'):
-                return response.Response(status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
-            print(f'User Come With The Right Password: {logInfo.get('password')}')
-            return response.Response(status=status.HTTP_200_OK)
+            pass
         except:
             return response.Response(status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)

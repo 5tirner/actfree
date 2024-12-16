@@ -7,5 +7,5 @@ urlpatterns = [
     path('SignUp', SignUp.as_view(), name='Handle User Registration'),
     path('login', login.as_view(), name='Handle User Login'),
     #Tokens
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('tokens', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 ]
