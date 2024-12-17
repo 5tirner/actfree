@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In</title>
+    <title>Activation</title>
     <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/thumbnails/000/619/321/small/1304-39.jpg">
     <style>
         * {
@@ -201,6 +201,20 @@
                 data[input.name] = input.value;
             }
             console.log(data);
+            data['email'] = localStorage.getItem("userEmail");
+            const response = await fetch('http:/127.0.0.1:9000/authentication/activation',
+                            {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify(data)
+                            });
+            if (response.status != 200){
+                showError("Code activation is wrong, check your email for the right one!", 3000);
+            }
+            else{
+                console.log("Activation Successful!");
+                localStorage.clear();
+            }
         }
 
         // Draw

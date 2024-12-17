@@ -18,5 +18,5 @@ class UserInfo(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class UserActivation(models.Model):
-    username = models.CharField(max_length=50)
+    email = models.EmailField(null=False)
     verfCode = models.CharField(max_length=8)

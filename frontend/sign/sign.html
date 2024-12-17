@@ -222,6 +222,8 @@
             }
             else if (response.status === 201){
                 console.log("Activation Needed");
+                console.log("EMAIL == ", data.email);
+                localStorage.setItem("userEmail", data.email);
                 location.href = '/activation/';
             }
             else {

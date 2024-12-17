@@ -3,7 +3,7 @@ from .serializers import UserInfoSerial
 from .passCheck import checkPassword
 from .models import UserInfo, UserActivation
 import requests
-import json
+from .codesGenerator import generateCode
 
 class SignUp(views.APIView):
     permission_classes = [permissions.AllowAny]
@@ -23,7 +23,10 @@ class SignUp(views.APIView):
                 email = theData.get('email'),
                 password = theData.get('password')
             )
-            print('Success')
+            codeVerefication = generateCode()
+            unactive = UserActivation(email=theData.get('email'), verfCode=codeVerefication)
+            unactive.save()
+            print(f"Need This Code To Verify Account: {codeVerefication}")
             #TODO: Send Verification Code
             return response.Response(status=status.HTTP_201_CREATED)
         print(f'Failed {serial.error_messages}')
@@ -49,7 +52,13 @@ class login(views.APIView):
 class activation(views.APIView):
     def post(self, req):
         try:
-            UserActivation.objects.get(verfCode=req.get('activationCode'))
-            print(f"{req.get('activationCode')}: is founded")
+            userBymail = UserActivation.objects.get(email=req.data.get('email'))
+            print(f"User of email: {req.data.get('email')} Send Ativation Code")
+            if userBymail.verfCode == req.data.get('activationCode'):
+                activateUser = UserInfo.objects.get(email=userBymail.email)
+                activateUser.isAuth = True
+                activateUser.save()
+                return response.Response(status=status.HTTP_200_OK)
         except:
-            print(f"{req.get('activationCode')} Not found")
+            print(f"{req.data.get('email')} Not found")
+        return response.Response(status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
