@@ -50,14 +50,18 @@ class login(views.APIView):
         return response.Response(status=status.HTTP_200_OK)
 
 class activation(views.APIView):
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
     def post(self, req):
         try:
+            print(f"Email Stored == {req.data.get('email')}")
             userBymail = UserActivation.objects.get(email=req.data.get('email'))
             print(f"User of email: {req.data.get('email')} Send Ativation Code")
             if userBymail.verfCode == req.data.get('activationCode'):
                 activateUser = UserInfo.objects.get(email=userBymail.email)
                 activateUser.isAuth = True
                 activateUser.save()
+                userBymail.delete()
                 return response.Response(status=status.HTTP_200_OK)
         except:
             print(f"{req.data.get('email')} Not found")
