@@ -47,7 +47,20 @@ class login(views.APIView):
         userOnDB = UserInfo.objects.get(email=logInfo.get('email'))
         if userOnDB.isAuth == False:
             return response.Response(status=status.HTTP_204_NO_CONTENT)
-        return response.Response(status=status.HTTP_200_OK)
+        myResponse = response.Response(status=status.HTTP_200_OK)
+        myResponse.set_cookie(
+            'access_token',
+            fetching.json().get('access'),
+            httponly=True,
+            samesite='Strict'
+        )
+        myResponse.set_cookie(
+            'refresh_token',
+            fetching.json().get('refresh'),
+            httponly=True,
+            samesite='Strict'
+        )
+        return myResponse
 
 class activation(views.APIView):
     permission_classes = [permissions.AllowAny]
